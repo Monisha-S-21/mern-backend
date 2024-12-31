@@ -27,16 +27,6 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                // Build the React app
-                bat '''
-                set PATH=%NODEJS_HOME%;%PATH%
-                npm run build
-                '''
-            }
-        }
-
         stage('SonarQube Analysis') {
             steps {
                 
