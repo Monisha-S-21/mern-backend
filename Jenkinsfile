@@ -5,6 +5,10 @@ pipeline {
         nodejs 'nodejs-18.16.1'
     }
 
+    environment {
+        SONARQUBE_TOKEN = credentials('mernbackend')
+    }
+
     stages {
         stage('Checkout Code') {
             steps {
@@ -14,8 +18,31 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm cache clean --force'
+                bat 'npm install --verbose'
             }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube Scanner') {
+                    bat '''
+                        npm run sonar -- ^
+                        -Dsonar.projectKey=mernbackend ^
+                        -Dsonar.sources=. ^
+                        -Dsonar.host.url=http://localhost:9000 ^
+                        -Dsonar.token=%SONARQUBE_TOKEN%
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Backend pipeline completed successfully.'
+        }
+        failure {
+            echo 'Backend pipeline failed.'
         }
     }
 }
