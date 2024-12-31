@@ -17,10 +17,13 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
+        steps {
+            sh 'node -v'      // Verify Node.js version
+            sh 'npm -v'       // Verify npm version
+            sh 'npm cache clean --force'
+            sh 'npm install --verbose'  // Verbose output
         }
+    }
 
         stage('SonarQube Analysis') {
             steps {
