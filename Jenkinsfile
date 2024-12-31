@@ -38,10 +38,10 @@ pipeline {
     }
   post {
         success {
-            echo 'Frontend pipeline completed successfully.'
+            echo 'Backend pipeline completed successfully.'
         }
         failure {
-            echo 'Frontend pipeline failed.'
+            echo 'Backend pipeline failed.'
         }
     }
 }
