@@ -33,11 +33,7 @@ pipeline {
                     bat '''
                         set PATH=%SONAR_SCANNER_PATH%;%PATH%
                         where sonar-scanner || echo "SonarQube scanner not found. Please install it."
-                        npm run sonar -- ^
-                        -Dsonar.projectKey=mernbackend ^
-                        -Dsonar.sources=. ^
-                        -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.token=%SONARQUBE_TOKEN%
+                        sonar-scanner.bat -D"sonar.projectKey=mernbackend" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.token=sqp_9a99359d2b457de7a9a9c9193b642b6203a7de0c"
                     '''
                 
             }
